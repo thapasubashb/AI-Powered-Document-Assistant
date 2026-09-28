@@ -9,7 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/react": "^4.0.121",
+    "@google/genai": "^2.24.0",
+    "@langchain/textsplitters": "^1.0.2",
+    "@supabase/supabase-js": "^2.117.2",
+    "ai": "^7.0.118",
     "next": "16.3.6",
+    "pdf-parse": "^2.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
