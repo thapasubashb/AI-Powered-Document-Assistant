@@ -8,10 +8,12 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
  *   - User questions at query time
  * Otherwise the vector spaces are incompatible.
  *
- * text-embedding-004 produces 768-dimensional vectors, which matches
- * our `vector(768)` column in the chunks table.
+ * gemini-embedding-001 replaced text-embedding-004 (deprecated Jan 14, 2026).
+ * It outputs 3072 dimensions by default, but we can truncate to 768 via
+ * `outputDimensionality`, which is what our database column vector(768) expects.
  */
-const EMBEDDING_MODEL = 'text-embedding-004'
+const EMBEDDING_MODEL = 'gemini-embedding-001'
+const EMBEDDING_DIMENSIONS = 768
 
 /**
  * Gemini's embedContent API accepts at most ~100 texts per request.
@@ -26,6 +28,9 @@ export async function generateEmbedding(text: string): Promise<number[]> {
   const response = await ai.models.embedContent({
     model: EMBEDDING_MODEL,
     contents: text,
+    config: {
+      outputDimensionality: EMBEDDING_DIMENSIONS,
+    },
   })
 
   const embedding = response.embeddings?.[0]?.values
@@ -48,6 +53,9 @@ export async function generateEmbeddings(texts: string[]): Promise<number[][]> {
     const response = await ai.models.embedContent({
       model: EMBEDDING_MODEL,
       contents: batch,
+      config: {
+        outputDimensionality: EMBEDDING_DIMENSIONS,
+      },
     })
 
     const embeddings = response.embeddings
