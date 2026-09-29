@@ -2,12 +2,16 @@
 
 import { useState } from 'react'
 
-interface PdfUploaderProps {
-  onIndexed: (documentId: string, filename: string) => void
+interface UploadResult {
+  documentId: string
+  filename: string
+  pages: number
+  chunks: number
 }
 
-export function PdfUploader({ onIndexed }: PdfUploaderProps) {
+export function PdfUploader() {
   const [uploading, setUploading] = useState(false)
+  const [result, setResult] = useState<UploadResult | null>(null)
   const [error, setError] = useState('')
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -16,18 +20,22 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
 
     setUploading(true)
     setError('')
+    setResult(null)
 
     const formData = new FormData()
     formData.append('file', file)
 
     try {
-      const res = await fetch('/api/upload', { method: 'POST', body: formData })
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
       const data = await res.json()
 
       if (!res.ok) {
         setError(data.error || 'Upload failed')
       } else {
-        onIndexed(data.documentId, data.filename)
+        setResult(data)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
@@ -53,8 +61,7 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
 
       {uploading && (
         <p className="mt-4 text-blue-600">
-          Processing PDF… (extracting text, chunking, embedding). This can take
-          20–60s for large files.
+          Processing PDF… (extracting text, chunking, embedding). This can take 20–60s for large files.
         </p>
       )}
 
@@ -62,6 +69,18 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
         <p className="mt-4 text-red-600">
           <strong>Error:</strong> {error}
         </p>
+      )}
+
+      {result && (
+        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+          <p className="font-semibold text-green-800">✅ Indexed successfully</p>
+          <ul className="mt-2 text-sm text-green-900 space-y-1">
+            <li>File: {result.filename}</li>
+            <li>Pages: {result.pages}</li>
+            <li>Chunks stored: {result.chunks}</li>
+            <li className="font-mono text-xs break-all">documentId: {result.documentId}</li>
+          </ul>
+        </div>
       )}
     </div>
   )
