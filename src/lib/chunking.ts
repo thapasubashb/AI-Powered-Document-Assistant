@@ -24,7 +24,7 @@ export async function chunkText(text: string): Promise<Chunk[]> {
     chunkOverlap: 200,
     // Order matters: try the biggest natural boundary first, fall back
     // to smaller ones only if the current chunk still exceeds chunkSize.
-    separators: ['\n\n', '\n', '. ', '! ', '? ', ' ', ''],
+   separators: ['. ', '! ', '? ', '\n\n', '\n', ' ', ''],
   })
 
   const documents = await splitter.createDocuments([text])
