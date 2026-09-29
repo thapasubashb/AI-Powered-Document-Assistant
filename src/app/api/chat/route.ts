@@ -8,21 +8,40 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 
 /**
  * Model fallback chain. If the primary model returns 503 (overloaded),
- * we try the next one. Order matters: fastest/cheapest first, then
- * progressively more capable (and slower) models as fallback.
+ * we try the next one. Order matters: fastest/most-available first.
+ *
+ * The list is based on the models your API key actually has access to
+ * (verified via `ai.models.list()`). Do not add model IDs that aren't
+ * in that list — they'll return 404 and waste a retry cycle.
  */
 const CHAT_MODELS = [
-  'gemini-3.8-flash',
   'gemini-3.7-flash',
   'gemini-3.6-flash',
   'gemini-3.5-flash',
+  'gemini-3.8-flash',
+  'gemini-flash-latest',
 ]
+
+/**
+ * How many times to retry the SAME model before falling through to the next.
+ *
+ * Set to 1 = try each model once, then move on. Falling through is more
+ * effective than retrying because Google's 503s are load-balancer decisions
+ * — retrying the same overloaded model usually hits the same cluster.
+ * Trying a DIFFERENT model routes to a different pool and usually succeeds.
+ */
+const maxAttemptsPerModel = 1
+
+/**
+ * Base delay (ms) for backoff between retries of the same model.
+ * Only matters if maxAttemptsPerModel > 1.
+ */
+const RETRY_BACKOFF_MS = 500
 
 async function callGeminiWithRetry(
   contents: string,
   systemInstruction: string
 ): Promise<{ text: string; model: string }> {
-  const maxAttemptsPerModel = 3
   let lastError: unknown = null
 
   for (const model of CHAT_MODELS) {
@@ -45,28 +64,33 @@ async function callGeminiWithRetry(
         lastError = err
         const msg = err instanceof Error ? err.message : String(err)
 
-        // 503 = overloaded, worth retrying
-        // 429 = rate limited, also worth retrying
-        // 404 = model doesn't exist, skip to next model immediately
-        const isRetryable = msg.includes('503') || msg.includes('UNAVAILABLE') ||
-                            msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')
-
+        // 404 / NOT_FOUND = model ID doesn't exist or was retired.
+        // Skip retries entirely and move to the next model.
         if (msg.includes('404') || msg.includes('NOT_FOUND')) {
-          // This model isn't available; try the next one in the chain
           console.warn(`Model ${model} not found, trying next...`)
           break
         }
 
+        // 503 / UNAVAILABLE = overloaded. 429 = rate limited.
+        // Both are retryable in principle, but with maxAttemptsPerModel=1
+        // we just log and move to the next model immediately.
+        const isRetryable =
+          msg.includes('503') ||
+          msg.includes('UNAVAILABLE') ||
+          msg.includes('429') ||
+          msg.includes('RESOURCE_EXHAUSTED')
+
         if (isRetryable && attempt < maxAttemptsPerModel) {
-          // Exponential backoff: 1s, then 2s
-          const delayMs = 1000 * Math.pow(2, attempt - 1)
-          console.warn(`${model} returned retryable error (attempt ${attempt}), waiting ${delayMs}ms`)
+          const delayMs = RETRY_BACKOFF_MS * Math.pow(2, attempt - 1)
+          console.warn(
+            `${model} returned retryable error (attempt ${attempt}), waiting ${delayMs}ms`
+          )
           await new Promise((r) => setTimeout(r, delayMs))
           continue
         }
 
-        // Non-retryable or out of attempts for this model → try next model
-        console.warn(`${model} failed permanently:`, msg.slice(0, 120))
+        // Non-retryable, or ran out of attempts for this model — try the next.
+        console.warn(`${model} failed, trying next. Reason:`, msg.slice(0, 120))
         break
       }
     }
@@ -94,6 +118,8 @@ export async function POST(req: Request) {
     })
 
     // ── 2. Short-circuit if nothing is relevant ─────────────────────
+    // This is the single strongest anti-hallucination guarantee:
+    // if retrieval finds nothing, we never even call the LLM.
     if (chunks.length === 0) {
       return NextResponse.json({
         ok: true,
@@ -102,7 +128,7 @@ export async function POST(req: Request) {
       })
     }
 
-    // ── 3. Build context block ──────────────────────────────────────
+    // ── 3. Build context block with clear source delimiters ────────
     const context = chunks
       .map((c, i) => `--- Source ${i + 1} (Page ${c.page_number}) ---\n${c.content}`)
       .join('\n\n')
