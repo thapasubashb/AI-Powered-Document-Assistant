@@ -1,8 +1,4 @@
-interface FeaturesProps {
-  onScrollToTop: () => void;
-}
-
-export function Features({ onScrollToTop }: FeaturesProps) {
+export function Features() {
   const features = [
     {
       title: "Grounded answers",
@@ -27,15 +23,19 @@ export function Features({ onScrollToTop }: FeaturesProps) {
     },
   ];
 
+  const stats = [
+    { value: "768", label: "Embedding dims" },
+    { value: "~1000", label: "Chars per chunk" },
+    { value: "Top-4", label: "Passages per query" },
+    { value: "0", label: "Hallucinations by design" },
+  ];
+
   return (
-    <section
-      id="features"
-      className="relative min-h-[calc(100vh-72px)] flex items-center justify-center px-4 py-16"
-    >
-      <div className="w-full max-w-5xl">
-        <div className="text-center mb-14">
+    <section id="features" className="relative px-4 py-24 md:py-28">
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="text-center mb-14 animate-fade-in-up">
           <p className="text-[11px] uppercase tracking-[0.18em] text-amber-300/70 font-semibold mb-3">
-            Features
+            Why it works
           </p>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">
             Built for{" "}
@@ -48,12 +48,13 @@ export function Features({ onScrollToTop }: FeaturesProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
+        {/* Feature cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
           {features.map((f, i) => (
             <div
               key={f.title}
               className="glass glass-specular rounded-2xl p-6 group hover:border-white/15 transition-all duration-500 animate-fade-in-up"
-              style={{ animationDelay: `${i * 100}ms` }}
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/15 to-rose-500/15 border border-white/[0.08] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                 <svg
@@ -78,36 +79,24 @@ export function Features({ onScrollToTop }: FeaturesProps) {
           ))}
         </div>
 
-        {/* CTA block */}
-        <div className="relative glass-strong glass-specular rounded-3xl p-8 md:p-10 text-center overflow-hidden animate-fade-in-up">
-          <div className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_50%_-20%,rgba(245,158,11,0.15),transparent_60%)]" />
-
-          <div className="relative">
-            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-3">
-              Ready to try it?
-            </h3>
-            <p className="text-white/50 text-sm mb-6 max-w-md mx-auto">
-              Drop a PDF at the top of the page and start asking questions in
-              seconds.
-            </p>
-            <button
-              onClick={onScrollToTop}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white text-sm font-medium shadow-lg shadow-amber-500/25 hover:shadow-amber-500/45 hover:scale-[1.02] active:scale-[0.98] transition-all"
+        {/* Metrics band */}
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-in-up"
+          style={{ animationDelay: "240ms" }}
+        >
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="glass glass-specular rounded-xl px-4 py-5 text-center group hover:border-white/15 transition-all duration-500"
             >
-              Upload a PDF
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2.2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </button>
-          </div>
+              <p className="text-2xl md:text-[1.75rem] font-semibold tracking-tight bg-gradient-to-br from-white via-amber-100 to-amber-200 bg-clip-text text-transparent mb-1.5">
+                {s.value}
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.1em] text-white/35 font-medium">
+                {s.label}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

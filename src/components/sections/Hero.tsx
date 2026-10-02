@@ -70,7 +70,7 @@ export function Hero({ onIndexed }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-72px)] flex items-center justify-center px-4 py-12"
+      className="relative min-h-[calc(100vh-72px)] flex items-center justify-center px-4 py-16"
     >
       <div className="w-full max-w-3xl">
         {/* Badge */}
@@ -81,7 +81,7 @@ export function Hero({ onIndexed }: HeroProps) {
           </div>
         </div>
 
-        {/* Headline — tighter than before */}
+        {/* Headline */}
         <h1 className="text-center text-[2.5rem] leading-[1.1] md:text-[4rem] md:leading-[1.05] font-semibold tracking-[-0.035em] mb-5 animate-fade-in-up">
           <span className="block text-white/95">Chat with</span>
           <span className="block mt-1 bg-gradient-to-br from-amber-200 via-orange-300 to-rose-300 bg-clip-text text-transparent">
@@ -97,7 +97,7 @@ export function Hero({ onIndexed }: HeroProps) {
           with page citations — never a hallucination.
         </p>
 
-        {/* COMPACT UPLOAD — horizontal, ~90px tall */}
+        {/* Upload card */}
         <div
           className="relative animate-fade-in-up"
           style={{ animationDelay: "160ms" }}
@@ -119,7 +119,7 @@ export function Hero({ onIndexed }: HeroProps) {
                 inputRef.current?.click();
               }
             }}
-            className={`relative rounded-2xl glass glass-specular transition-all duration-300 group ${
+            className={`relative rounded-2xl glass glass-specular overflow-hidden transition-all duration-300 group ${
               isDragging
                 ? "scale-[1.01] border-amber-400/50"
                 : uploading
@@ -136,11 +136,16 @@ export function Hero({ onIndexed }: HeroProps) {
               className="hidden"
             />
 
-            <div className="px-5 py-5 md:px-6 md:py-5 flex items-center gap-4">
+            {/* Animated glow on drag */}
+            {isDragging && (
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-rose-500/10 pointer-events-none" />
+            )}
+
+            <div className="relative px-5 py-5 md:px-6 md:py-5 flex items-center gap-4">
               {uploading ? (
-                <CompactProgress stage={STAGES[stageIndex]} idx={stageIndex} />
+                <ProgressState stage={STAGES[stageIndex]} idx={stageIndex} />
               ) : (
-                <CompactIdle isDragging={isDragging} />
+                <IdleState isDragging={isDragging} />
               )}
             </div>
           </div>
@@ -169,16 +174,43 @@ export function Hero({ onIndexed }: HeroProps) {
           </div>
         )}
 
+        {/* Trust hints */}
+        <div
+          className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mt-6 text-[10.5px] text-white/25 animate-fade-in"
+          style={{ animationDelay: "300ms" }}
+        >
+          <span className="flex items-center gap-1.5">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            No signup
+          </span>
+          <span className="w-1 h-1 rounded-full bg-white/15" />
+          <span className="flex items-center gap-1.5">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Data stays on server
+          </span>
+          <span className="w-1 h-1 rounded-full bg-white/15" />
+          <span className="flex items-center gap-1.5">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Open source
+          </span>
+        </div>
+
         {/* Scroll hint */}
         <div
-          className="flex justify-center mt-10 animate-fade-in"
+          className="flex justify-center mt-14 animate-fade-in"
           style={{ animationDelay: "400ms" }}
         >
           <a
-            href="#how-it-works"
+            href="#pipeline"
             className="text-[11px] text-white/30 hover:text-white/60 transition-colors flex items-center gap-1.5 group"
           >
-            <span>See how it works</span>
+            <span>See the pipeline</span>
             <svg
               className="w-3 h-3 group-hover:translate-y-0.5 transition-transform"
               fill="none"
@@ -199,63 +231,75 @@ export function Hero({ onIndexed }: HeroProps) {
   );
 }
 
-function CompactIdle({ isDragging }: { isDragging: boolean }) {
+/* ═══════════════════════════════════════════════════════════ */
+
+function IdleState({ isDragging }: { isDragging: boolean }) {
   return (
     <>
+      {/* Gradient icon */}
       <div
-        className={`w-11 h-11 rounded-xl glass-strong flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
-          isDragging ? "scale-110 border-amber-400/40" : ""
+        className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 flex items-center justify-center shadow-lg shadow-amber-500/25 flex-shrink-0 transition-all duration-300 ${
+          isDragging ? "scale-110 shadow-amber-500/50" : "group-hover:scale-105"
         }`}
       >
         <svg
-          className={`w-5 h-5 transition-colors ${
-            isDragging ? "text-amber-300" : "text-white/60"
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth={1.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-        </svg>
-      </div>
-
-      <div className="flex-1 min-w-0 text-left">
-        <p className="text-white text-sm font-medium mb-0.5 truncate">
-          {isDragging ? "Release to upload" : "Drop a PDF or click to browse"}
-        </p>
-        <p className="text-white/35 text-[11px]">
-          Max 10 MB · Text-based PDFs only
-        </p>
-      </div>
-
-      <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-        <button
-          type="button"
-          className="px-4 py-2 rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white text-xs font-medium shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all"
-        >
-          Choose file
-        </button>
-      </div>
-    </>
-  );
-}
-
-function CompactProgress({ stage, idx }: { stage: string; idx: number }) {
-  const progress = ((idx + 1) / 5) * 100;
-
-  return (
-    <>
-      <div className="w-11 h-11 rounded-xl glass-strong flex items-center justify-center flex-shrink-0 relative overflow-hidden">
-        <div className="absolute inset-0 shimmer" />
-        <svg
-          className="w-5 h-5 text-amber-300 relative z-1 animate-spin-slow"
+          className="w-5 h-5 md:w-6 md:h-6 text-white"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+
+      {/* Text */}
+      <div className="flex-1 min-w-0 text-left">
+        <p className="text-white text-sm md:text-[15px] font-medium mb-0.5 truncate">
+          {isDragging ? "Release to upload" : "Drop your PDF anywhere"}
+        </p>
+        <p className="text-white/40 text-[11px] md:text-xs">
+          Max 10 MB · Text-based PDFs · 15–45 seconds
+        </p>
+      </div>
+
+      {/* Secondary button — hidden on small screens where card is fully tappable */}
+      <button
+        type="button"
+        className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.1] hover:bg-white/[0.1] hover:border-white/20 text-white text-xs font-medium transition-all flex-shrink-0 pointer-events-none"
+      >
+        Choose file
+        <svg
+          className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+    </>
+  );
+}
+
+function ProgressState({ stage, idx }: { stage: string; idx: number }) {
+  const progress = ((idx + 1) / 5) * 100;
+
+  return (
+    <>
+      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 flex items-center justify-center shadow-lg shadow-amber-500/25 flex-shrink-0 relative overflow-hidden">
+        <div className="absolute inset-0 shimmer" />
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6 text-white relative z-1 animate-spin-slow"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={2.2}
           strokeLinecap="round"
         >
           <path d="M21 12a9 9 0 11-6.219-8.56" />
@@ -263,8 +307,10 @@ function CompactProgress({ stage, idx }: { stage: string; idx: number }) {
       </div>
 
       <div className="flex-1 min-w-0 text-left">
-        <p className="text-white text-sm font-medium mb-1">{stage}</p>
-        <div className="h-0.5 rounded-full bg-white/[0.06] overflow-hidden max-w-[200px]">
+        <p className="text-white text-sm md:text-[15px] font-medium mb-1.5">
+          {stage}
+        </p>
+        <div className="h-0.5 rounded-full bg-white/[0.08] overflow-hidden max-w-[240px]">
           <div
             className="h-full rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 transition-all duration-700 ease-out"
             style={{ width: `${progress}%` }}
