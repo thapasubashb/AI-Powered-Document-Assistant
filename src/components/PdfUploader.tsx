@@ -48,12 +48,8 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
         body: formData,
       });
       const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Upload failed.");
-      } else {
-        onIndexed(data.documentId, data.filename);
-      }
+      if (!res.ok) setError(data.error || "Upload failed.");
+      else onIndexed(data.documentId, data.filename);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -75,38 +71,37 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
-      <div className="w-full max-w-4xl">
-        {/* ══ Hero ══ */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass glass-specular text-[11px] text-white/70 mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-violet-400 to-blue-400" />
+    <div className="flex-1 flex items-center justify-center px-4 py-12 md:py-20">
+      <div className="w-full max-w-3xl">
+        {/* ══ HERO ══ */}
+        <div className="text-center mb-14 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass glass-specular text-[11px] text-white/60 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-amber-400 to-rose-400" />
             <span>Retrieval-Augmented Generation · Powered by Gemini</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.03em] leading-[1.05] mb-6">
+          <h1 className="text-[2.75rem] leading-[1.08] md:text-[4.5rem] md:leading-[1.02] font-semibold tracking-[-0.035em] mb-6">
             <span className="block text-white/95">Chat with</span>
-            <span className="block mt-2 bg-gradient-to-br from-white via-violet-200 to-blue-300 bg-clip-text text-transparent">
+            <span className="block mt-2 bg-gradient-to-br from-amber-200 via-orange-300 to-rose-300 bg-clip-text text-transparent">
               any document
             </span>
           </h1>
 
-          <p className="text-white/55 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-2">
+          <p className="text-white/50 text-[15px] md:text-lg max-w-xl mx-auto leading-relaxed mb-3">
             Upload a PDF. Ask questions in plain English. Get grounded answers
             with exact page citations — never a hallucination.
           </p>
-          <p className="text-white/30 text-sm">
+          <p className="text-white/25 text-xs">
             Free · No signup · Your files stay on your server
           </p>
         </div>
 
-        {/* ══ Upload card ══ */}
+        {/* ══ UPLOAD CARD ══ */}
         <div
           className="relative animate-fade-in-up"
-          style={{ animationDelay: "120ms" }}
+          style={{ animationDelay: "100ms" }}
         >
-          {/* Soft ambient glow behind the card */}
-          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-violet-500/20 via-fuchsia-500/15 to-blue-500/20 blur-3xl -z-1" />
+          <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-rose-500/15 blur-3xl -z-1" />
 
           <div
             onDragOver={(e) => {
@@ -125,19 +120,13 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
             }}
             className={`relative group rounded-3xl glass glass-specular overflow-hidden transition-all duration-500 ${
               isDragging
-                ? "scale-[1.015] border-violet-400/50"
+                ? "scale-[1.015] border-amber-400/40"
                 : uploading
                   ? "cursor-wait"
                   : "cursor-pointer hover:scale-[1.005] hover:border-white/20"
             }`}
           >
-            {/* Animated flowing border when dragging */}
-            {isDragging && (
-              <div className="absolute inset-0 rounded-3xl border-flow -z-1 opacity-70" />
-            )}
-
-            {/* Inner gradient sheen on hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_-20%,rgba(139,92,246,0.15),transparent_60%)]" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_-30%,rgba(245,158,11,0.12),transparent_55%)]" />
 
             <input
               ref={inputRef}
@@ -148,7 +137,7 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
               className="hidden"
             />
 
-            <div className="relative px-8 py-14 md:px-12 md:py-16">
+            <div className="relative px-8 py-14 md:px-14 md:py-18">
               {uploading ? (
                 <UploadProgress stage={STAGES[stageIndex]} stageIdx={stageIndex} />
               ) : (
@@ -158,10 +147,10 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
           </div>
         </div>
 
-        {/* ══ Error ══ */}
+        {/* ══ ERROR ══ */}
         {error && (
           <div
-            className="mt-5 p-4 rounded-2xl glass border-red-500/30 bg-red-500/[0.06] text-red-200 text-sm animate-fade-in flex items-start gap-3"
+            className="mt-5 p-4 rounded-2xl glass border-red-500/25 bg-red-500/[0.05] text-red-200 text-sm animate-fade-in flex items-start gap-3"
             role="alert"
           >
             <svg
@@ -181,10 +170,11 @@ export function PdfUploader({ onIndexed }: PdfUploaderProps) {
           </div>
         )}
 
-        {/* ══ Feature row ══ */}
+        {/* ══ FEATURES ══ */}
         <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 animate-fade-in-up"
-          style={{ animationDelay: "240ms" }}
+          id="features"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-14 animate-fade-in-up"
+          style={{ animationDelay: "200ms" }}
         >
           <FeatureCard
             title="Grounded answers"
@@ -218,13 +208,13 @@ function IdleState({ isDragging }: { isDragging: boolean }) {
     <div className="flex flex-col items-center gap-6 text-center">
       <div className="relative">
         <div
-          className={`w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 glass-strong ${
+          className={`w-18 h-18 md:w-20 md:h-20 rounded-2xl glass-strong flex items-center justify-center transition-all duration-500 ${
             isDragging ? "scale-110" : ""
           }`}
         >
           <svg
-            className={`w-9 h-9 transition-colors duration-300 ${
-              isDragging ? "text-violet-300" : "text-white/70"
+            className={`w-8 h-8 md:w-9 md:h-9 transition-colors duration-300 ${
+              isDragging ? "text-amber-300" : "text-white/60"
             }`}
             fill="none"
             stroke="currentColor"
@@ -237,7 +227,7 @@ function IdleState({ isDragging }: { isDragging: boolean }) {
           </svg>
         </div>
         {isDragging && (
-          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-violet-500/30 to-blue-500/30 blur-xl -z-1 animate-glow-pulse" />
+          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-amber-500/25 to-rose-500/25 blur-xl -z-1 animate-glow-pulse" />
         )}
       </div>
 
@@ -245,32 +235,32 @@ function IdleState({ isDragging }: { isDragging: boolean }) {
         <p className="text-white text-lg font-medium mb-1.5">
           {isDragging ? "Drop to upload" : "Drop a PDF anywhere"}
         </p>
-        <p className="text-white/45 text-sm">
+        <p className="text-white/40 text-sm">
           or{" "}
-          <span className="text-violet-300 underline underline-offset-4 decoration-violet-300/40 hover:decoration-violet-300 transition-colors">
+          <span className="text-amber-300 underline underline-offset-4 decoration-amber-300/30 hover:decoration-amber-300 transition-colors">
             browse files
           </span>{" "}
           from your computer
         </p>
       </div>
 
-      <div className="flex items-center gap-4 text-[11px] text-white/35 mt-2">
+      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-white/30 mt-1">
         <span className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
           Max 10 MB
         </span>
-        <span className="w-1 h-1 rounded-full bg-white/20" />
+        <span className="w-1 h-1 rounded-full bg-white/15" />
         <span className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
           Text-based PDFs
         </span>
-        <span className="w-1 h-1 rounded-full bg-white/20" />
+        <span className="w-1 h-1 rounded-full bg-white/15" />
         <span className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
           15–45 seconds
@@ -280,17 +270,22 @@ function IdleState({ isDragging }: { isDragging: boolean }) {
   );
 }
 
-function UploadProgress({ stage, stageIdx }: { stage: string; stageIdx: number }) {
-  const stages = STAGES;
-  const progress = ((stageIdx + 1) / stages.length) * 100;
+function UploadProgress({
+  stage,
+  stageIdx,
+}: {
+  stage: string;
+  stageIdx: number;
+}) {
+  const progress = ((stageIdx + 1) / STAGES.length) * 100;
 
   return (
     <div className="flex flex-col items-center gap-6 text-center">
       <div className="relative">
-        <div className="w-20 h-20 rounded-2xl glass-strong flex items-center justify-center relative overflow-hidden">
+        <div className="w-18 h-18 md:w-20 md:h-20 rounded-2xl glass-strong flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 shimmer" />
           <svg
-            className="w-9 h-9 text-violet-300 relative z-1 animate-spin-slow"
+            className="w-8 h-8 md:w-9 md:h-9 text-amber-300 relative z-1 animate-spin-slow"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -300,20 +295,20 @@ function UploadProgress({ stage, stageIdx }: { stage: string; stageIdx: number }
             <path d="M21 12a9 9 0 11-6.219-8.56" />
           </svg>
         </div>
-        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-violet-500/30 to-blue-500/30 blur-2xl -z-1 animate-glow-pulse" />
+        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-amber-500/25 to-rose-500/25 blur-2xl -z-1 animate-glow-pulse" />
       </div>
 
       <div>
         <p className="text-white text-lg font-medium mb-1.5">{stage}</p>
-        <p className="text-white/40 text-xs">
-          Step {stageIdx + 1} of {stages.length} · Estimated 15–45 seconds
+        <p className="text-white/35 text-xs">
+          Step {stageIdx + 1} of {STAGES.length} · Estimated 15–45 seconds
         </p>
       </div>
 
-      <div className="w-72 max-w-full">
-        <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
+      <div className="w-64 max-w-full">
+        <div className="h-1 rounded-full bg-white/[0.05] overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-blue-500 transition-all duration-700 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 transition-all duration-700 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -332,10 +327,10 @@ function FeatureCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="glass glass-specular rounded-2xl p-5 group hover:border-white/20 transition-all duration-500">
-      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/15 to-blue-500/15 border border-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+    <div className="glass glass-specular rounded-2xl p-5 group hover:border-white/15 transition-all duration-500">
+      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500/12 to-rose-500/12 border border-white/[0.08] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
         <svg
-          className="w-5 h-5 text-violet-300"
+          className="w-4 h-4 text-amber-300"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -346,8 +341,8 @@ function FeatureCard({
           {icon}
         </svg>
       </div>
-      <h3 className="text-sm font-medium text-white mb-1.5">{title}</h3>
-      <p className="text-xs text-white/45 leading-relaxed">{desc}</p>
+      <h3 className="text-[13px] font-medium text-white mb-1.5">{title}</h3>
+      <p className="text-[12px] text-white/40 leading-relaxed">{desc}</p>
     </div>
   );
 }
