@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AmbientBackground } from "@/components/AmbientBackground";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,19 +10,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Smart PDF Reader — AI Document Assistant",
+  title: "Lumen — AI Document Assistant",
   description:
-    "Upload a PDF and ask questions. Powered by retrieval-augmented generation with page-level citations.",
+    "Upload a PDF, ask questions, get grounded answers with page citations. Powered by retrieval-augmented generation.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased min-h-screen">
+        <AmbientBackground />
         {children}
       </body>
     </html>
