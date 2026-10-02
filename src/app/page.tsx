@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Pipeline } from "@/components/sections/Pipeline";
 import { Features } from "@/components/sections/Features";
 import { Chat } from "@/components/Chat";
 
@@ -20,7 +20,6 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // Chat mode — fullscreen, no landing sections, no footer
   if (document) {
     return (
       <>
@@ -39,16 +38,13 @@ export default function Home() {
     );
   }
 
-  // Landing mode — 3 sections + footer
   return (
     <>
       <Navbar />
       <main className="flex-1">
-        <Hero
-          onIndexed={(id, filename) => setDocument({ id, filename })}
-        />
-        <HowItWorks />
-        <Features onScrollToTop={scrollToTop} />
+        <Hero onIndexed={(id, filename) => setDocument({ id, filename })} />
+        <Pipeline />
+        <Features />
       </main>
       <Footer />
     </>

@@ -32,12 +32,12 @@ export function Navbar() {
           </div>
         </Link>
 
-        <div className="hidden md:flex items-center gap-0.5">
+                <div className="hidden md:flex items-center gap-0.5">
           <a
-            href="#how-it-works"
+            href="#pipeline"
             className="px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/[0.05] transition-all"
           >
-            How it works
+            Pipeline
           </a>
           <a
             href="#features"

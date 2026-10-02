@@ -30,9 +30,9 @@ const SOCIALS = [
 ];
 
 const PRODUCT_LINKS = [
-  { label: "Upload", href: "/" },
+  { label: "Upload", href: "#hero" },
+  { label: "Pipeline", href: "#pipeline" },
   { label: "Features", href: "#features" },
-  { label: "How it works", href: "#how-it-works" },
 ];
 
 const RESOURCE_LINKS = [
