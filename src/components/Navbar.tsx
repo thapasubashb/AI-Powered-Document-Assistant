@@ -5,9 +5,8 @@ import Link from "next/link";
 export function Navbar() {
   return (
     <header className="sticky top-0 z-50 pt-3 px-4 animate-fade-in">
-      <nav className="max-w-5xl mx-auto glass glass-specular rounded-2xl px-4 py-2.5 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+      <nav className="max-w-5xl mx-auto glass glass-specular rounded-2xl px-4 py-2 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5 group">
           <div className="relative">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-105 transition-transform">
               <svg
@@ -25,7 +24,7 @@ export function Navbar() {
           </div>
           <div className="leading-none">
             <span className="text-sm font-semibold tracking-tight text-white">
-              Lumen
+              VikSub
             </span>
             <p className="text-[10px] text-white/35 mt-0.5">
               Document intelligence
@@ -33,19 +32,18 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Links — hidden on mobile */}
-        <div className="hidden md:flex items-center gap-1">
-          <a
-            href="#features"
-            className="px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/[0.05] transition-all"
-          >
-            Features
-          </a>
+        <div className="hidden md:flex items-center gap-0.5">
           <a
             href="#how-it-works"
             className="px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/[0.05] transition-all"
           >
             How it works
+          </a>
+          <a
+            href="#features"
+            className="px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/[0.05] transition-all"
+          >
+            Features
           </a>
           <a
             href="https://github.com/thapasubashb/AI-Powered-Document-Assistant"
@@ -57,7 +55,6 @@ export function Navbar() {
           </a>
         </div>
 
-        {/* Right side */}
         <div className="flex items-center gap-2">
           <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-500/[0.08] text-[10px] text-emerald-300 font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

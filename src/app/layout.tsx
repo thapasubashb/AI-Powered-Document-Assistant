@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen — AI Document Assistant",
+  title: "VikSub — AI Document Assistant",
   description:
     "Upload a PDF, ask questions, get grounded answers with page citations. Powered by retrieval-augmented generation.",
 };
@@ -28,4 +28,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}
