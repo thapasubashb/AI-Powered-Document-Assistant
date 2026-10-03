@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/Reveal";
+
 export function Features() {
   const features = [
     {
@@ -33,67 +35,69 @@ export function Features() {
   return (
     <section id="features" className="relative px-4 md:px-6 py-24 md:py-32">
       <div className="w-full max-w-7xl mx-auto">
-        <div className="max-w-2xl mb-14 animate-fade-in-up">
-          <p className="text-[12px] font-semibold tracking-wider text-[#7091E6] uppercase mb-3">
-            Why it works
-          </p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] text-[#2A3659] mb-4">
-            Built for{" "}
-            <span className="bg-gradient-to-r from-[#7091E6] to-[#3D52A0] bg-clip-text text-transparent">
-              trust
-            </span>
-          </h2>
-          <p className="text-[#8697C4] text-base leading-relaxed">
-            Every design decision here is about making AI answers verifiable.
-          </p>
+        <div className="max-w-2xl mb-14">
+          <Reveal direction="up">
+            <p className="text-[12px] font-semibold tracking-wider text-[#7091E6] uppercase mb-3">
+              Why it works
+            </p>
+          </Reveal>
+          <Reveal direction="up" delay={80}>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] text-[#2A3659] mb-4">
+              Built for{" "}
+              <span className="bg-gradient-to-r from-[#7091E6] to-[#3D52A0] bg-clip-text text-transparent">
+                trust
+              </span>
+            </h2>
+          </Reveal>
+          <Reveal direction="up" delay={160}>
+            <p className="text-[#8697C4] text-base leading-relaxed">
+              Every design decision here is about making AI answers verifiable.
+            </p>
+          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
           {features.map((f, i) => (
-            <div
-              key={f.title}
-              className="relative glass glass-specular glass-interactive p-7 overflow-hidden animate-fade-in-up"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <div className="relative">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#7091E6] to-[#3D52A0] flex items-center justify-center shadow-lg shadow-[#3D52A0]/25 mb-5">
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    {f.icon}
-                  </svg>
+            <Reveal key={f.title} direction="up" delay={i * 100}>
+              <div className="relative glass glass-specular glass-interactive shine p-7 h-full group overflow-hidden">
+                <div className="relative">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#7091E6] to-[#3D52A0] flex items-center justify-center shadow-lg shadow-[#3D52A0]/25 mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {f.icon}
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-semibold text-[#2A3659] mb-2.5">
+                    {f.title}
+                  </h3>
+                  <p className="text-[13px] text-[#8697C4] leading-relaxed">
+                    {f.desc}
+                  </p>
                 </div>
-                <h3 className="text-base font-semibold text-[#2A3659] mb-2.5">
-                  {f.title}
-                </h3>
-                <p className="text-[13px] text-[#8697C4] leading-relaxed">
-                  {f.desc}
-                </p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {stats.map((s, i) => (
-            <div
-              key={s.label}
-              className="glass glass-specular p-6 text-center animate-fade-in-up"
-              style={{ animationDelay: `${240 + i * 50}ms` }}
-            >
-              <p className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] bg-gradient-to-br from-[#7091E6] to-[#3D52A0] bg-clip-text text-transparent mb-2">
-                {s.value}
-              </p>
-              <p className="text-[11px] text-[#8697C4] font-medium uppercase tracking-wider">
-                {s.label}
-              </p>
-            </div>
+            <Reveal key={s.label} direction="up" delay={i * 80}>
+              <div className="glass glass-specular p-6 text-center group cursor-default">
+                <p className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] bg-gradient-to-br from-[#7091E6] to-[#3D52A0] bg-clip-text text-transparent mb-2 transition-transform duration-300 group-hover:scale-110">
+                  {s.value}
+                </p>
+                <p className="text-[11px] text-[#8697C4] font-medium uppercase tracking-wider">
+                  {s.label}
+                </p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

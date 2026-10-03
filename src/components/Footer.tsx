@@ -55,10 +55,13 @@ const CONNECT_LINKS = [
   },
 ];
 
+import { Reveal } from "@/components/Reveal";
+
 export function Footer() {
   return (
     <footer className="relative mt-auto px-4 md:px-6 py-20">
-      <div className="max-w-7xl mx-auto">
+      <Reveal direction="up">
+        <div className="max-w-7xl mx-auto">
         {/* Top hairline — subtle separator, not a card */}
         <div className="h-px w-full bg-gradient-to-r from-transparent to-transparent mb-14" />
 
@@ -148,6 +151,7 @@ export function Footer() {
           </div>
         </div>
       </div>
+      </Reveal>
     </footer>
   );
 }
