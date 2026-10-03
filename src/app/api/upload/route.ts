@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server'
-import { PDFParse } from 'pdf-parse'
+import { extractText, getDocumentProxy } from 'unpdf'
 import { randomUUID } from 'crypto'
 import { supabaseAdmin } from '@/lib/supabase-server'
 import { chunkText } from '@/lib/chunking'
 import { generateEmbeddings } from '@/lib/embeddings'
 
+
 export const runtime = 'nodejs'
+export const maxDuration = 60
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 const INSERT_BATCH_SIZE = 100
@@ -33,13 +35,13 @@ export async function POST(req: Request) {
     // v2 exports a PDFParse class, NOT a default function.
     // We must instantiate it, call getText() for the text, and
     // getInfo() for the page count, then destroy() to free resources.
-    const parser = new PDFParse({ data: buffer })
-    const textResult = await parser.getText()
-    const infoResult = await parser.getInfo()
-    await parser.destroy()
+        // ── 3. Extract text using unpdf ─────────────────────────────────
+    const uint8 = new Uint8Array(buffer)
+    const pdf = await getDocumentProxy(uint8)
+    const { text, totalPages } = await extractText(pdf, { mergePages: true })
 
-    const rawText = textResult.text
-    const numPages: number = infoResult.total ?? 1
+    const rawText = text
+    const numPages: number = totalPages ?? 1
 
     // ── 4. Clean the raw text ───────────────────────────────────────
     const cleanedText = cleanText(rawText)

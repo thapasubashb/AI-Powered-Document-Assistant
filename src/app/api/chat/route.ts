@@ -3,6 +3,7 @@ import { GoogleGenAI } from '@google/genai'
 import { retrieveChunks } from '@/lib/retrieval'
 
 export const runtime = 'nodejs'
+export const maxDuration = 30
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 
