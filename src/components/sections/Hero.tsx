@@ -73,88 +73,77 @@ export function Hero({ onIndexed }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-72px)] flex items-center px-4 md:px-6 py-16"
+      className="relative flex items-center px-4 md:px-6 pt-16 pb-24 md:pt-24 md:pb-32"
     >
       <div className="w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          {/* LEFT */}
           <div className="lg:col-span-6 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass glass-specular text-[11px] text-slate-600 mb-7">
-              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
-              <span>RAG · Powered by Gemini</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-[11px] text-[#3D52A0] font-medium mb-7">
+              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#7091E6] to-[#3D52A0]" />
+              <span>Retrieval-Augmented Generation</span>
             </div>
 
-            <h1 className="text-[2.75rem] leading-[1.05] md:text-[4.5rem] md:leading-[1.02] font-semibold tracking-[-0.035em] mb-6">
-              <span className="block text-slate-900">Chat with</span>
-              <span className="block mt-1 bg-gradient-to-br from-sky-500 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+            <h1 className="text-[2.75rem] leading-[1.05] md:text-[4.25rem] md:leading-[1.02] font-semibold tracking-[-0.035em] mb-6">
+              <span className="block text-[#2A3659]">Chat with</span>
+              <span className="block mt-1 pb-2 bg-gradient-to-r from-[#7091E6] via-[#3D52A0] to-[#3D52A0] bg-clip-text text-transparent">
                 any document
               </span>
             </h1>
 
-            <p className="text-slate-500 text-base md:text-[17px] max-w-xl leading-relaxed mb-8">
+            <p className="text-[#8697C4] text-base md:text-[17px] max-w-xl leading-relaxed mb-8">
               Upload a PDF. Ask questions in plain English. Get grounded
               answers with page citations — never a hallucination.
             </p>
 
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <svg
-                  className="w-3 h-3 text-emerald-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.6}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                No signup
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-[#8697C4] font-medium">
+              <span className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-white/70 border border-white flex items-center justify-center shadow-sm">
+                  <svg
+                    className="w-3 h-3 text-[#7091E6]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={3}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </span>
+                No signup required
               </span>
-              <span className="w-1 h-1 rounded-full bg-slate-300" />
-              <span className="flex items-center gap-1.5">
-                <svg
-                  className="w-3 h-3 text-emerald-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.6}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Data stays on server
-              </span>
-              <span className="w-1 h-1 rounded-full bg-slate-300" />
-              <span className="flex items-center gap-1.5">
-                <svg
-                  className="w-3 h-3 text-emerald-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.6}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Open source
+              <span className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-white/70 border border-white flex items-center justify-center shadow-sm">
+                  <svg
+                    className="w-3 h-3 text-[#7091E6]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={3}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </span>
+                Data stays on your server
               </span>
             </div>
           </div>
 
+          {/* RIGHT — Upload */}
           <div
             className="lg:col-span-6 animate-fade-in-up"
             style={{ animationDelay: "120ms" }}
           >
             <div className="relative">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-sky-300/40 via-violet-300/30 to-rose-300/30 blur-3xl -z-1" />
+              {/* Soft colored glow behind card */}
+              <div className="absolute -inset-8 rounded-[40px] bg-gradient-to-br from-[#ADBBDA]/60 via-[#7091E6]/30 to-[#3D52A0]/20 blur-3xl -z-1" />
 
               <div
                 onDragOver={(e) => {
@@ -171,12 +160,12 @@ export function Hero({ onIndexed }: HeroProps) {
                     inputRef.current?.click();
                   }
                 }}
-                className={`relative rounded-2xl glass-strong glass-specular overflow-hidden transition-all duration-300 group ${
+                className={`relative glass-strong glass-specular rounded-3xl px-8 py-14 cursor-pointer overflow-hidden transition-all duration-300 ${
                   isDragging
-                    ? "scale-[1.01] border-sky-400/60"
+                    ? "scale-[1.02] border-[#7091E6]/60"
                     : uploading
                       ? "cursor-wait"
-                      : "cursor-pointer hover:border-sky-300/60"
+                      : "hover:scale-[1.01] hover:border-[#ADBBDA]"
                 }`}
               >
                 <input
@@ -189,93 +178,109 @@ export function Hero({ onIndexed }: HeroProps) {
                 />
 
                 {isDragging && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-sky-100/60 via-violet-100/50 to-rose-100/50 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#7091E6]/15 via-[#ADBBDA]/15 to-[#3D52A0]/10 pointer-events-none" />
                 )}
 
-                <div className="relative px-6 py-6">
+                <div className="relative">
                   {uploading ? (
-                    <ProgressState stage={STAGES[stageIndex]} idx={stageIndex} />
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative mb-5">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7091E6] via-[#3D52A0] to-[#3D52A0] flex items-center justify-center shadow-lg shadow-[#3D52A0]/40">
+                          <svg
+                            className="w-7 h-7 text-white animate-spin-slow"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2.2}
+                            strokeLinecap="round"
+                          >
+                            <path d="M21 12a9 9 0 11-6.219-8.56" />
+                          </svg>
+                        </div>
+                        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-[#7091E6]/50 to-[#3D52A0]/40 blur-xl -z-1 animate-float" />
+                      </div>
+                      <p className="text-[#2A3659] text-[15px] font-semibold mb-1">
+                        {STAGES[stageIndex]}
+                      </p>
+                      <p className="text-[#8697C4] text-xs mb-5">
+                        Step {stageIndex + 1} of {STAGES.length}
+                      </p>
+                      <div className="w-56 h-1.5 rounded-full bg-white/60 overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-[#7091E6] to-[#3D52A0] transition-all duration-700 ease-out"
+                          style={{
+                            width: `${
+                              ((stageIndex + 1) / STAGES.length) * 100
+                            }%`,
+                          }}
+                        />
+                      </div>
+                    </div>
                   ) : (
-                    <IdleState isDragging={isDragging} />
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative mb-5">
+                        <div
+                          className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7091E6] via-[#3D52A0] to-[#3D52A0] flex items-center justify-center shadow-lg shadow-[#3D52A0]/40 transition-transform duration-300 ${
+                            isDragging ? "scale-110" : "group-hover:scale-105"
+                          }`}
+                        >
+                          <svg
+                            className="w-7 h-7 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                          </svg>
+                        </div>
+                        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-[#7091E6]/40 to-[#3D52A0]/30 blur-xl -z-1" />
+                      </div>
+                      <p className="text-[#2A3659] text-[15px] font-semibold mb-1.5">
+                        {isDragging
+                          ? "Release to upload"
+                          : "Drop a PDF to begin"}
+                      </p>
+                      <p className="text-[#8697C4] text-xs">
+                        or{" "}
+                        <span className="bg-gradient-to-r from-[#7091E6] to-[#3D52A0] bg-clip-text text-transparent font-semibold">
+                          browse files
+                        </span>{" "}
+                        · Max 10 MB
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-400 mt-4 text-center">
-              Everything runs on your server. Nothing leaves your infrastructure.
+            {error && (
+              <div className="mt-4 px-4 py-3 rounded-2xl glass border-red-300/60 bg-red-50/70 text-red-700 text-xs flex items-start gap-2.5">
+                <svg
+                  className="w-4 h-4 flex-shrink-0 mt-px"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{error}</span>
+              </div>
+            )}
+
+            <p className="text-[11px] text-[#8697C4] mt-4 text-center">
+              Indexing takes 15–45 seconds for a typical PDF
             </p>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function IdleState({ isDragging }: { isDragging: boolean }) {
-  return (
-    <div className="flex items-center gap-4">
-      <div
-        className={`w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-sky-500/30 flex-shrink-0 transition-all duration-300 ${
-          isDragging ? "scale-110 shadow-sky-500/50" : "group-hover:scale-105"
-        }`}
-      >
-        <svg
-          className="w-6 h-6 md:w-7 md:h-7 text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      </div>
-
-      <div className="flex-1 min-w-0 text-left">
-        <p className="text-slate-900 text-[15px] md:text-base font-medium mb-1 truncate">
-          {isDragging ? "Release to upload" : "Drop your PDF here"}
-        </p>
-        <p className="text-slate-500 text-xs">
-          or click anywhere to browse · Max 10 MB
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function ProgressState({ stage, idx }: { stage: string; idx: number }) {
-  const progress = ((idx + 1) / 5) * 100;
-
-  return (
-    <div className="flex items-center gap-4">
-      <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-sky-500/30 flex-shrink-0 relative overflow-hidden">
-        <div className="absolute inset-0 shimmer" />
-        <svg
-          className="w-6 h-6 md:w-7 md:h-7 text-white relative z-1 animate-spin-slow"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth={2.2}
-          strokeLinecap="round"
-        >
-          <path d="M21 12a9 9 0 11-6.219-8.56" />
-        </svg>
-      </div>
-
-      <div className="flex-1 min-w-0 text-left">
-        <p className="text-slate-900 text-[15px] font-medium mb-2">{stage}</p>
-        <div className="h-0.5 rounded-full bg-slate-200 overflow-hidden max-w-[280px]">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-violet-500 transition-all duration-700 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="text-slate-400 text-[10px] mt-2">
-          Step {idx + 1} of 5
-        </p>
-      </div>
-    </div>
   );
 }

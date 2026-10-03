@@ -95,15 +95,12 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
   return (
     <div className="flex-1 flex flex-col items-center px-4 pt-6 pb-6">
       <div className="w-full max-w-3xl flex-1 flex flex-col min-h-0">
-        <div
-          className="glass rounded-2xl px-4 py-3 flex items-center justify-between mb-4 flex-shrink-0 animate-fade-in"
-          style={{ animationDelay: "50ms" }}
-        >
+        <div className="glass glass-specular rounded-2xl px-4 py-3 flex items-center justify-between mb-4 flex-shrink-0 animate-fade-in">
           <div className="flex items-center gap-3 min-w-0">
             <div className="relative flex-shrink-0">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-sky-100 to-sky-200 border border-sky-200 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-white to-[#EDE8F5] border border-white flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-sky-600"
+                  className="w-4 h-4 text-[#7091E6]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -117,10 +114,10 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" />
             </div>
             <div className="min-w-0">
-              <p className="text-[13px] text-slate-900 font-medium truncate">
+              <p className="text-[13px] text-[#2A3659] font-semibold truncate">
                 {filename}
               </p>
-              <p className="text-[10px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-[#8697C4] mt-0.5">
                 Indexed · Ready for questions
               </p>
             </div>
@@ -128,7 +125,7 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
 
           <button
             onClick={onReset}
-            className="text-[11px] text-slate-500 hover:text-slate-900 transition-colors whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-slate-100 flex items-center gap-1.5 flex-shrink-0"
+            className="text-[12px] text-[#8697C4] hover:text-[#3D52A0] transition-colors whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-white/60 flex items-center gap-1.5 flex-shrink-0 font-medium"
           >
             <svg
               className="w-3 h-3"
@@ -158,13 +155,8 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
           {loading && <ThinkingBubble />}
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="relative flex-shrink-0 mt-2 animate-fade-in-up"
-          style={{ animationDelay: "150ms" }}
-        >
-          <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-sky-300/30 via-violet-300/20 to-rose-300/30 blur-2xl -z-1" />
-          <div className="glass-strong rounded-2xl p-1.5 flex items-end gap-2 focus-within:border-sky-400/40 transition-all duration-300">
+        <form onSubmit={handleSubmit} className="flex-shrink-0 mt-2">
+          <div className="glass-strong glass-specular rounded-2xl p-1.5 flex items-end gap-2 focus-within:border-[#7091E6]/50 transition-colors">
             <textarea
               ref={textareaRef}
               value={input}
@@ -173,7 +165,7 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
               placeholder="Ask a question about the document…"
               disabled={loading}
               rows={1}
-              className="flex-1 resize-none bg-transparent text-slate-900 placeholder:text-slate-400 text-sm px-3.5 py-3 outline-none max-h-40 disabled:opacity-50 leading-relaxed"
+              className="flex-1 resize-none bg-transparent text-[#2A3659] placeholder:text-[#ADBBDA] text-sm px-3.5 py-3 outline-none max-h-40 disabled:opacity-50 leading-relaxed"
               onInput={(e) => {
                 const el = e.currentTarget;
                 el.style.height = "auto";
@@ -183,7 +175,7 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="relative flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-sky-500/40 transition-all duration-300 enabled:hover:scale-105 active:scale-95 group"
+              className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#7091E6] to-[#3D52A0] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-[#3D52A0]/30 transition-all active:scale-95"
               aria-label="Send message"
             >
               {loading ? (
@@ -198,7 +190,7 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
                 </svg>
               ) : (
                 <svg
-                  className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -211,7 +203,7 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
               )}
             </button>
           </div>
-          <p className="text-[10px] text-slate-400 text-center mt-2">
+          <p className="text-[10px] text-[#ADBBDA] text-center mt-2">
             Enter to send · Shift+Enter for new line
           </p>
         </form>
@@ -222,9 +214,9 @@ export function Chat({ documentId, filename, onReset }: ChatProps) {
 
 function EmptyState({ onPick }: { onPick: (text: string) => void }) {
   return (
-    <div className="h-full flex flex-col items-center justify-center text-center animate-fade-in-up py-12">
+    <div className="h-full flex flex-col items-center justify-center text-center py-12 animate-fade-in-up">
       <div className="relative inline-block mb-6">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-sky-500/30">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7091E6] to-[#3D52A0] flex items-center justify-center shadow-lg shadow-[#3D52A0]/30">
           <svg
             className="w-7 h-7 text-white"
             fill="none"
@@ -237,13 +229,13 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
             <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
         </div>
-        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-sky-300/50 to-violet-300/50 blur-2xl -z-1" />
+        <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-[#7091E6]/30 to-[#3D52A0]/30 blur-2xl -z-1 animate-float" />
       </div>
 
-      <h2 className="text-slate-900 text-lg font-medium mb-2">
+      <h2 className="text-[#2A3659] text-base font-semibold mb-2">
         Ready when you are
       </h2>
-      <p className="text-slate-500 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
+      <p className="text-[#8697C4] text-[13px] mb-8 max-w-sm mx-auto leading-relaxed">
         Ask anything about this document. Answers are grounded in the source
         with page-level citations.
       </p>
@@ -253,7 +245,7 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
           <button
             key={s}
             onClick={() => onPick(s)}
-            className="text-[11px] px-3.5 py-2 rounded-full glass text-slate-600 hover:text-slate-900 hover:border-sky-300 transition-all duration-300 hover:scale-105"
+            className="text-[12px] px-3.5 py-2 rounded-full glass text-[#3D52A0] hover:border-[#7091E6]/50 transition-colors font-medium"
           >
             {s}
           </button>
@@ -276,18 +268,18 @@ function MessageBubble({ message }: { message: Message }) {
 
       <div className={`max-w-[85%] ${isUser ? "order-1" : ""}`}>
         <div
-          className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+          className={`rounded-2xl px-4 py-3 text-[13.5px] leading-relaxed ${
             isUser
-              ? "bg-gradient-to-br from-sky-500 to-violet-600 text-white rounded-tr-md shadow-lg shadow-sky-500/20"
-              : "glass text-slate-800 rounded-tl-md"
+              ? "bg-gradient-to-br from-[#7091E6] to-[#3D52A0] text-white rounded-tr-sm shadow-lg shadow-[#3D52A0]/25"
+              : "glass text-[#2A3659] rounded-tl-sm"
           }`}
         >
           <p className="whitespace-pre-wrap">{message.content}</p>
         </div>
 
         {message.sources && message.sources.length > 0 && (
-          <div className="mt-2.5 flex flex-wrap gap-1.5 items-center">
-            <span className="text-[9px] text-slate-400 mr-0.5 uppercase tracking-wider font-semibold">
+          <div className="mt-2 flex flex-wrap gap-1.5 items-center">
+            <span className="text-[10px] text-[#ADBBDA] mr-0.5 uppercase tracking-wider font-semibold">
               Sources
             </span>
             {message.sources.map((s, i) => (
@@ -304,33 +296,19 @@ function MessageBubble({ message }: { message: Message }) {
 
 function SourcePill({ source }: { source: Source }) {
   const pct = Math.round(source.similarity * 100);
-  const tone = pct >= 75 ? "emerald" : pct >= 60 ? "sky" : "neutral";
-
-  const toneClasses = {
-    emerald: "border-emerald-300 bg-emerald-50 text-emerald-700",
-    sky: "border-sky-300 bg-sky-50 text-sky-700",
-    neutral: "border-slate-200 bg-slate-50 text-slate-600",
-  }[tone];
+  const tone =
+    pct >= 75
+      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+      : pct >= 60
+        ? "border-[#ADBBDA] bg-white/80 text-[#3D52A0]"
+        : "border-[#ADBBDA]/60 bg-white/60 text-[#8697C4]";
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] ${toneClasses} hover:scale-105 transition-transform duration-200 cursor-default`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10.5px] font-medium ${tone}`}
       title={`Cosine similarity: ${source.similarity}`}
     >
-      <svg
-        className="w-2.5 h-2.5 opacity-60"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-        />
-      </svg>
-      <span className="font-medium">p.{source.page}</span>
+      <span>p.{source.page}</span>
       <span className="opacity-40">·</span>
       <span>{pct}%</span>
     </span>
@@ -340,7 +318,7 @@ function SourcePill({ source }: { source: Source }) {
 function AssistantAvatar() {
   return (
     <div className="flex-shrink-0 mt-0.5">
-      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-sky-500/25">
+      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#7091E6] to-[#3D52A0] flex items-center justify-center shadow-md shadow-[#3D52A0]/25">
         <svg
           className="w-3.5 h-3.5 text-white"
           fill="none"
@@ -359,9 +337,9 @@ function AssistantAvatar() {
 
 function UserAvatar() {
   return (
-    <div className="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+    <div className="w-8 h-8 rounded-xl glass flex items-center justify-center flex-shrink-0 mt-0.5">
       <svg
-        className="w-3.5 h-3.5 text-slate-400"
+        className="w-3.5 h-3.5 text-[#8697C4]"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -381,14 +359,14 @@ function ThinkingBubble() {
   return (
     <div className="flex gap-3 animate-fade-in">
       <AssistantAvatar />
-      <div className="glass rounded-2xl rounded-tl-md px-4 py-3.5 flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse-dot" />
+      <div className="glass rounded-2xl rounded-tl-sm px-4 py-3.5 flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#7091E6] animate-pulse-dot" />
         <span
-          className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse-dot"
+          className="w-1.5 h-1.5 rounded-full bg-[#7091E6] animate-pulse-dot"
           style={{ animationDelay: "0.15s" }}
         />
         <span
-          className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse-dot"
+          className="w-1.5 h-1.5 rounded-full bg-[#7091E6] animate-pulse-dot"
           style={{ animationDelay: "0.3s" }}
         />
       </div>

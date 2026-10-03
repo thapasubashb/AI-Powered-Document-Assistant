@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased">
+        <div className="palette-ribbon" aria-hidden="true" />
         <AmbientBackground />
         <div className="relative z-10 min-h-screen flex flex-col">
           {children}
