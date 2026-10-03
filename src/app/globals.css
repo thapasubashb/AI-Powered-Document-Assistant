@@ -35,7 +35,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   PALETTE RIBBON — fixed 3px signature bar at very top
+   PALETTE RIBBON
    ══════════════════════════════════════════════════════════════ */
 
 .palette-ribbon {
@@ -54,14 +54,22 @@ body {
     #ede8f5 100%
   );
   pointer-events: none;
+  background-size: 200% 100%;
+  animation: ribbon-shift 12s ease-in-out infinite;
+}
+
+@keyframes ribbon-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════
    AMBIENT BACKGROUND
-   A strong vertical gradient that walks through the full palette
-   from top (navy) to bottom (pale lavender). This is the visible
-   "color flow" — subtle enough to keep text readable, strong
-   enough to actually see the 5 colors transition down the page.
    ══════════════════════════════════════════════════════════════ */
 
 .ambient-bg {
@@ -82,7 +90,6 @@ body {
     linear-gradient(180deg, #f9fbfe 0%, #ffffff 55%, #fafbfd 100%);
 }
 
-/* Soft orbs reinforcing the flow */
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -149,8 +156,6 @@ body {
 
 /* ══════════════════════════════════════════════════════════════
    WIREFRAME SPHERE
-   Proper UV sphere. Rotates slowly. Stroked with a palette
-   gradient so the color flow lives inside the decoration.
    ══════════════════════════════════════════════════════════════ */
 
 .wireframe {
@@ -281,18 +286,19 @@ body {
 
 .glass-interactive {
   transition:
-    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 250ms ease;
 }
 
 .glass-interactive:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 1),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.6),
     0 1px 2px 0 rgba(15, 23, 42, 0.05),
-    0 24px 56px -20px rgba(61, 82, 160, 0.22),
-    0 12px 32px -8px rgba(112, 145, 230, 0.14);
+    0 32px 64px -20px rgba(61, 82, 160, 0.28),
+    0 16px 40px -8px rgba(112, 145, 230, 0.18);
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -344,7 +350,38 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes glow-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(112, 145, 230, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(112, 145, 230, 0);
   }
 }
 
@@ -366,6 +403,44 @@ body {
 
 .animate-float {
   animation: float-slow 3.2s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-glow-ring {
+  animation: glow-ring 2s ease-out infinite;
+}
+
+/* Card shine on hover */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.shine:hover::after {
+  opacity: 1;
+  animation: shimmer-slide 900ms ease-out;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -402,4 +477,18 @@ input:focus,
 textarea:focus,
 button:focus {
   outline: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
