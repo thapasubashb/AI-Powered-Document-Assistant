@@ -17,7 +17,7 @@ export function Navbar({ onNavigate, onHome }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 px-4 md:px-6 pt-3 animate-fade-in">
+    <header className="sticky top-0 z-50 px-4 md:px-6 pt-9 animate-fade-in">
       <nav className="max-w-7xl mx-auto glass-strong glass-specular rounded-2xl px-4 py-2.5 flex items-center justify-between">
         <button
           onClick={handleHome}

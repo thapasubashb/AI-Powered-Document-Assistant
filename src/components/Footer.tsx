@@ -57,9 +57,14 @@ const CONNECT_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto px-4 md:px-6 pb-6">
-      <div className="max-w-7xl mx-auto glass-strong glass-specular rounded-3xl px-6 md:px-10 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-8 mb-10">
+    <footer className="relative mt-auto px-4 md:px-6 py-20">
+      <div className="max-w-7xl mx-auto">
+        {/* Top hairline — subtle separator, not a card */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent to-transparent mb-14" />
+
+        {/* Main grid */}
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-8 mb-14">
+          {/* Author */}
           <div className="col-span-2 md:col-span-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="relative">
@@ -118,7 +123,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        {/* Bottom row */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-[#ADBBDA]/30">
           <p className="text-[#ADBBDA] text-[12px] flex items-center gap-1.5">
             <span>Crafted by</span>
             <a
